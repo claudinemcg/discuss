@@ -18,6 +18,7 @@ defmodule DiscussWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    # this is the first route when someone makes this request, find the Page Controller module and open index
   end
 
   # Other scopes may use custom stacks.
