@@ -19,6 +19,7 @@ defmodule DiscussWeb.Router do
 
     get "/", PageController, :index
     # this is the first route when someone makes this request, find the Page Controller module and open index
+    get "topics/new", TopicController, :new
   end
 
   # Other scopes may use custom stacks.
