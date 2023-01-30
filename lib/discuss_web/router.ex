@@ -17,10 +17,14 @@ defmodule DiscussWeb.Router do
   scope "/", DiscussWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
     # this is the first route when someone makes this request, find the Page Controller module and open index
+    # break REST convention here, instead of going to PageController, want them to see a list of topics so:
+    get "/", TopicController, :index
+
     get "/topics/new", TopicController, :new
     post "/topics", TopicController, :create
+
   end
 
   # Other scopes may use custom stacks.

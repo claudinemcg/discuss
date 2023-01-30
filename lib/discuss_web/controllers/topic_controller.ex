@@ -7,6 +7,11 @@ defmodule DiscussWeb.TopicController do
   # changeset = DiscussWeb.Topic.chageset(struct, params)
   # when use alias above can drop DiscussWeb so %Topic{} and Topic.chageset(struct, params)
 
+  def index(conn, _params) do
+    topics = Repo.all(Topic)   # Discuss.Repo.all(DiscussWeb.Topic) -> gets everything from database topics
+    render(conn, "index.html", topics: topics)
+  end
+
   def new(conn, _params) do
     # struct = %Topic{}
     # params = %{}
@@ -25,4 +30,7 @@ defmodule DiscussWeb.TopicController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
+
 end
