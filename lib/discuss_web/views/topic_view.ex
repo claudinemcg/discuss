@@ -1,3 +1,3 @@
 defmodule DiscussWeb.TopicView do
-use DiscussWeb, :view
+  use DiscussWeb, :view #act like a view
 end

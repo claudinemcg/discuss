@@ -1,8 +1,9 @@
-<%= form_for @changeset, topic_path(@conn, :create), fn f -> %>
+<%= form_for @changeset, Routes.topic_path(@conn, :create), fn f -> %>
 
   <div class="form-group">
     <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
     <!-- takes in form, f and will be responsioble for creating title, :title -->
+    <%= error_tag f, :title %> <!-- error_tag for f (f the form, from the anonymous function we started on line one) so if form is empty (ie no title entered) it returns "can't be blank" -->
   </div>
 
   <%= submit "Save Topic", class: "btn btn-primary" %>

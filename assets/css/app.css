@@ -118,3 +118,9 @@
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
+
+/* My CSS */
+.form-group {
+  position: relative;
+  margin: 25px 0;
+}
