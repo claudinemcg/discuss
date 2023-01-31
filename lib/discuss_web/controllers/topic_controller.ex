@@ -25,7 +25,11 @@ defmodule DiscussWeb.TopicController do
 
     case Repo.insert(changeset)  do         # added alias Discuss.Repo to def controller in discuss_web.ex so
                                             # all controller have it
-      {:ok, post} -> IO.inspect(post)
+      {:ok, _post} ->
+        conn
+        |> put_flash(:info, "Topic Created")
+        |> redirect(to: Routes.topic_path(conn, :index)) # sending user to index function in topic controller
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
