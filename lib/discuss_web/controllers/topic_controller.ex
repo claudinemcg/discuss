@@ -25,7 +25,7 @@ defmodule DiscussWeb.TopicController do
 
     case Repo.insert(changeset)  do         # added alias Discuss.Repo to def controller in discuss_web.ex so
                                             # all controller have it
-      {:ok, _post} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Created")
         |> redirect(to: Routes.topic_path(conn, :index)) # sending user to index function in topic controller
@@ -35,6 +35,29 @@ defmodule DiscussWeb.TopicController do
     end
   end
 
-  @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
+  def edit(conn, %{"id" => topic_id}) do      # (%{"id" => topic_id} = params)
+    topic = Repo.get(Topic, topic_id)         # Repo.get finds a single record with the id
+    changeset = Topic.changeset(topic)        # only passing in struct, default for params
 
+    render(conn, "edit.html", changeset: changeset, topic: topic)  # adding in topic so when we submit the form
+                                                                   # we need to know the id
+  end
+
+  def update(conn, %{"id" => topic_id, "topic" => topic}) do # new topic
+    old_topic = Repo.get(Topic, topic_id)             # struct
+    changeset = Topic.changeset(old_topic, topic)     # topic has new attributes
+
+    case Repo.update(changeset) do
+      {:ok, _topic} ->
+        conn
+        |> put_flash(:info, "Topic updated")
+        |> redirect(to: Routes.topic_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "edit.html", changeset: changeset, topic: old_topic)
+    end
+  end
+
+  def delete(conn, %{"id" => topic_id}) do
+
+  end
 end

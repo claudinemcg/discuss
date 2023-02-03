@@ -1,4 +1,5 @@
 defmodule DiscussWeb.Router do
+  alias DiscussWeb.TopicController
   use DiscussWeb, :router
 
   pipeline :browser do
@@ -14,17 +15,22 @@ defmodule DiscussWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", DiscussWeb do
+  scope "/" do      # was 'scope "/", DiscussWeb do' but wasn't working
     pipe_through :browser
 
     # get "/", PageController, :index
     # this is the first route when someone makes this request, find the Page Controller module and open index
     # break REST convention here, instead of going to PageController, want them to see a list of topics so:
-    get "/", TopicController, :index
 
-    get "/topics/new", TopicController, :new
-    post "/topics", TopicController, :create
+    # get "/topics", TopicController, :index
+    # get "/topics/new", TopicController, :new
+    # post "/topics", TopicController, :create
+    # get "/topics/:id/edit", TopicController, :edit
+    # put "/topics/:id", TopicController, :update
+    resources "/topics", TopicController  # use instead of routes above, onlt works when you follow RESTful conventions
 
+    # if you want to have the index page as '/' instead of '/topics' use
+    # resources "/", TopicController # then all the routes won't have /topics
   end
 
   # Other scopes may use custom stacks.
