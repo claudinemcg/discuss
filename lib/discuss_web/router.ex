@@ -27,7 +27,8 @@ defmodule DiscussWeb.Router do
     # post "/topics", TopicController, :create
     # get "/topics/:id/edit", TopicController, :edit
     # put "/topics/:id", TopicController, :update
-    resources "/topics", TopicController  # use instead of routes above, onlt works when you follow RESTful conventions
+
+    resources "/topics", TopicController  # use instead of routes above, only works when you follow RESTful conventions
 
     # if you want to have the index page as '/' instead of '/topics' use
     # resources "/", TopicController # then all the routes won't have /topics

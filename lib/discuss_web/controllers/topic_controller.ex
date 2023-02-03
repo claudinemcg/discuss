@@ -57,7 +57,13 @@ defmodule DiscussWeb.TopicController do
     end
   end
 
-  def delete(conn, %{"id" => topic_id}) do
+  def delete(conn, %{"id" => topic_id}) do # id of topic that we weant to delete
+    Repo.get!(Topic, topic_id)  |> Repo.delete!
+    # use get! because it returns an error e.g. if user tries to delete a topic that doesn't exist, like 422
+    # touch database to get record and touch database again to delete it
 
+    conn
+    |> put_flash(:info, "Topic Deleted")
+    |> redirect(to: Routes.topic_path(conn, :index))
   end
 end
