@@ -50,3 +50,14 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
+
+config :ueberauth, Ueberauth,
+  providers: [
+    # only provider we're using is Github
+    github: { Ueberauth.Strategy.Github, []}
+  ]
+  # Ueberauth.Strategy.Github comes from  {:ueberauth_github, "~> 0.8"} in mix.exs
+
+  config :ueberauth, Ueberauth.Strategy.Github.Oauth,
+    client_id: System.get_env("GITHUB_CLIENT_ID"),
+    client_secret: System.get_env("GITHUB_CLIENT_SECRET")

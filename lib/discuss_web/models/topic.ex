@@ -1,5 +1,6 @@
 defmodule DiscussWeb.Topic do
-use DiscussWeb, :model
+use DiscussWeb, :model # this also creates a struct of the same name %DiscussWeb.Topic{}
+
   # link to database
   schema "topics" do
     field :title, :string
@@ -8,8 +9,9 @@ use DiscussWeb, :model
   # validation
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title])
-    |> validate_required([:title])
+    |> cast(params, [:title])         # produces a changeset
+    |> validate_required([:title])    # adds errors to changeset
+    # returns an updated changeset
   end
 
 end
