@@ -1,5 +1,7 @@
 defmodule DiscussWeb.Router do
   alias DiscussWeb.TopicController
+  alias DiscussWeb.AuthController
+
   use DiscussWeb, :router
 
   pipeline :browser do
@@ -28,10 +30,23 @@ defmodule DiscussWeb.Router do
     # get "/topics/:id/edit", TopicController, :edit
     # put "/topics/:id", TopicController, :update
 
-    resources "/topics", TopicController  # use instead of routes above, only works when you follow RESTful conventions
+    # resources "/topics", TopicController
+    resources "/", TopicController  # use instead of routes above, only works when you follow RESTful conventions
 
     # if you want to have the index page as '/' instead of '/topics' use
     # resources "/", TopicController # then all the routes won't have /topics
+  end
+
+  scope "/auth"  do
+    pipe_through :browser
+    get "/:provider", AuthController, :request
+    # handled by the Ueberauth module (in controller plug Ueberauth)
+    # when user comes here Ueberauth will intercept it and send them off to Github
+
+    get "/:provider/callback", AuthController, :callback
+    # for when user comes back from Github
+
+    #e.g. /auth/github and /auth/github/callback
   end
 
   # Other scopes may use custom stacks.

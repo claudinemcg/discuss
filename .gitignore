@@ -33,4 +33,4 @@ npm-debug.log
 /assets/node_modules/
 
 #Secret file
-.env
+/config/dev.secret.exs

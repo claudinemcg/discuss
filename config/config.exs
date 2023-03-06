@@ -3,7 +3,6 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-
 # General application configuration
 import Config
 
@@ -47,17 +46,18 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
-
 config :ueberauth, Ueberauth,
   providers: [
     # only provider we're using is Github
-    github: { Ueberauth.Strategy.Github, []}
+    # github: {Ueberauth.Strategy.Github, []} # make sure email is not private on github
+    github: { Ueberauth.Strategy.Github, [default_scope: "user"]}
   ]
   # Ueberauth.Strategy.Github comes from  {:ueberauth_github, "~> 0.8"} in mix.exs
 
-  config :ueberauth, Ueberauth.Strategy.Github.Oauth,
-    client_id: System.get_env("GITHUB_CLIENT_ID"),
-    client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: System.get_env("GITHUB_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+
+  # Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{config_env()}.exs"
